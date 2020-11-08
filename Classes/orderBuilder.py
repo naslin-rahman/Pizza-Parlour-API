@@ -1,6 +1,6 @@
-from Classes.pizza.py import Pizza
-from Classes.drinks.py import Drink
-from Classes.order.py import Order
+from Classes.pizza import Pizza
+from Classes.drinks import Drinks
+from Classes.order import Order
 
 class OrderBuilder:
     def __init__(self):
