@@ -8,10 +8,10 @@ import json
 
 class ParlourInterface:
     def __init__(self):
-        self.menu = new Menu()
+        self.menu = Menu()
         self.orderNums = 0
         self.orders = {}
-        self.orderBuilder = new OrderBuilder()
+        self.orderBuilder = OrderBuilder()
 
     def newOrder(self, pizzaSize, pizzaType, pizzaToppings, drinkType):
         # Assumes valid pizza size as string, valid pizza type as string

@@ -7,15 +7,15 @@ class OrderBuilder:
         pass
 
     def makePizza(self, size, type, toppings):
-        pizza = new Pizza(size, type, toppings)
+        pizza = Pizza(size, type, toppings)
         return pizza
 
     def makeDrink(self, type):
-        drink = new Drink(type)
+        drink = Drink(type)
         return drink
 
     def makeOrder(self, ordernum):
-        order = new Order(ordernum)
+        order = Order(ordernum)
         return order
 
     def buildOrder(self, pizzaSize, pizzaType, pizzaToppings, drinkType, orderNum):
