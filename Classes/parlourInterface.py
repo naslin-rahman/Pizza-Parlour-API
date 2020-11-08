@@ -1,8 +1,8 @@
-from pizza.py import Pizza
-from drinks.py import Drink
-from order.py import Order
-from menu.py import Menu
-from orderBuilder.py import OrderBuilder
+from Classes.pizza.py import Pizza
+from Classes.drinks.py import Drink
+from Classes.order.py import Order
+from Classes.menu.py import Menu
+from Classes.orderBuilder.py import OrderBuilder
 import json
 # TODO: Maybe put ordr builder in same file as order
 

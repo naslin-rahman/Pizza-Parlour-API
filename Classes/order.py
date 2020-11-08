@@ -1,5 +1,5 @@
-from pizza.py import Pizza
-from drinks.py import Drink
+from Classes.pizza.py import Pizza
+from Classes.drinks.py import Drink
 
 class Order:
   def __init__(self, ordernum):

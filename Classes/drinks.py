@@ -1,4 +1,4 @@
-from menu.py import Menu
+from Classes.menu.py import Menu
 
 class Drinks:
   def __init__(self, type):

@@ -1,4 +1,4 @@
-from menu.py import Menu
+from Classes.menu.py import Menu
 
 class Pizza:
   def __init__(self, size, type, toppings):
