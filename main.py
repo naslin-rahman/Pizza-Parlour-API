@@ -5,7 +5,13 @@ def cli():
     #print("yeet\n")
     if (action == "menu"):
         # TODO enter item and get back price
-        print("This is the menu")
+       
+        view_menu = input("Would you like to view the entire menu?\n")
+        if (view_menu == "yes"):
+            os.system('curl http://127.0.0.1:5000/menu') # A get request i think?
+
+        elif (view_menu == "no"):
+            item = input("Please enter item name to see cost\n")
 
     if (action == "order"):
         #Enter number of pizzas and drinks
