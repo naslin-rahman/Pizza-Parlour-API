@@ -3,6 +3,7 @@ from drinks.py import Drink
 from order.py import Order
 from menu.py import Menu
 from orderBuilder.py import OrderBuilder
+import json
 # TODO: Maybe put ordr builder in same file as order
 
 class ParlourInterface:
@@ -53,3 +54,14 @@ class ParlourInterface:
 
     def addDrinkType(self, newType, cost):
         self.menu.drinks[newType] = cost
+
+    # Returns a specific order as a json string
+    def getOrder(self, orderNum):
+        orderToModify = self.orders[str(self.ordernum)]
+        json_string = json.dumps(orderToModify)
+        return json_string
+
+    def getMenu(self):
+        menu = self.menu.getMenu()
+        json_string = json.dumps(menu)
+        return json_string

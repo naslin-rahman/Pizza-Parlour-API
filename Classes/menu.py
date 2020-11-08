@@ -33,3 +33,7 @@ class Menu:
           "Beef" : 0.5,
           "Pepperoni": 0.35,
       }
+
+    def getMenu(self):
+        menu = { self.pizzas, self.pizzasPrep, self.drinks, self.toppings}
+        return menu
