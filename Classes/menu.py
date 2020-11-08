@@ -4,13 +4,13 @@ class Menu:
           "Pepperoni": 12,
           "Magherita": 9,
           "Vegetarian": 11,
-          "Neapolitan": 11,
+          "Neapolitan": 11
         }
       self.pizzasPrep = {
           "Pepperoni": ["Pepperoni"],
           "Magherita": ["Basil"],
           "Vegetarian": ["Tomatoes", "Mushroom", "Jalapenos"],
-          "Neapolitan": ["Tomatoes"],
+          "Neapolitan": ["Tomatoes"]
         }
 
       self.drinks = {
@@ -21,7 +21,7 @@ class Menu:
           "Diet Pepsi" : 1.5,
           "Dr. Pepper" : 1.5,
           "Water" : 2,
-          "Juice" : 1,
+          "Juice" : 1
       }
       self.toppings = {
           "Basil" : 0.15,
@@ -31,9 +31,13 @@ class Menu:
           "Jalapenos" : 0.25,
           "Chicken" : 0.3,
           "Beef" : 0.5,
-          "Pepperoni": 0.35,
+          "Pepperoni": 0.35
       }
 
-def getMenu(self):
-    menu = { self.pizzas, self.pizzasPrep, self.drinks, self.toppings}
-    return menu
+  def getMenu(self):
+      menu_temp = {}
+      menu_temp["pizzas"] = self.pizzas
+      menu_temp["pizzasPrep"] = self.pizzasPrep
+      menu_temp["drinks"] = self.drinks
+      menu_temp["toppings"] = self.toppings
+      return menu_temp
