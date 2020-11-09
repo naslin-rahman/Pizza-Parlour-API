@@ -20,4 +20,4 @@ def get_item_price():
     return 'This is the menu item price'
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug = True)
