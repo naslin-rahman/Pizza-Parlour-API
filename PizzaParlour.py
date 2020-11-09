@@ -2,6 +2,7 @@ from flask import Flask
 from Classes.parlourInterface import ParlourInterface
 
 app = Flask("Assignment 2")
+parlour = ParlourInterface()
 
 @app.route('/pizza')
 def welcome_pizza():
@@ -10,12 +11,11 @@ def welcome_pizza():
 @app.route('/menu')
 def menu():
     # Return the entire menu
-    parlour = ParlourInterface()
     menu = parlour.get_menu()
     return parlour.get_menu()
 
 @app.route('/menu/price', methods = ['GET'])
-def get_item_price():
+def get_item_price(item_name):
     # TODO
     return 'This is the menu item price'
 
