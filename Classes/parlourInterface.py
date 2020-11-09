@@ -13,42 +13,49 @@ class ParlourInterface:
         self.orders = {}
         self.orderBuilder = OrderBuilder()
 
-    def new_order(self, pizzaSize, pizzaType, pizzaToppings, drinkType):
+    def new_order(self, numPizzas, numDrinks, pizzaSize, pizzaType, pizzaToppings, drinkType):
         # Assumes valid pizza size as string, valid pizza type as string
         # Assumes valid pizzaToppings as an array of strings
         # Assumes valid drinkType as strings
         # Default order is one pizza and one drink
         # TODO: Add empty cases - ex no dirnk just pizza
         # TODO: Add able to modify indiv orders
-        self.orderNum += 1
-        order = self.orderBuilder.build_order(pizzaSize, pizzaType, pizzaToppings, drinkType, self.orderNum)
-        self.orders[str(self.ordernum)] = order
+        self.orderNums += 1
+        order = self.orderBuilder.build_order(self.menu, numPizzas, numDrinks, pizzaSize, pizzaType, pizzaToppings, drinkType, self.orderNums)
+
+        if (order == -1):
+            return "Error: Invalid Type of Order Input"
+
+        self.orders[str(self.orderNums)] = order
+        cost = order.get_cost(self.menu)
+
+        return "Order #" + str(self.orderNums) + " successfully added. Your order cost is: $" + str(cost)
 
     def add_pizza(self, pizzaSize, pizzaType, pizzaToppings, orderNum):
-        orderToModify = self.orders[str(self.ordernum)]
+        orderToModify = self.orders[str(self.orderNums)]
         pizza = self.orderBuilder.make_pizza(pizzaSize, pizzaType, pizzaToppings)
         orderToModify.add_pizza(pizza)
-        self.orders[str(self.ordernum)] = orderToModify
+        self.orders[str(self.orderNums)] = orderToModify
 
     def delete_pizza(self, pizzaNum, orderNum):
-        orderToModify = self.orders[str(self.ordernum)]
+        orderToModify = self.orders[str(self.orderNums)]
         orderToModify.remove_pizza(pizzaNum)
-        self.orders[str(self.ordernum)] = orderToModify
+        self.orders[str(self.orderNums)] = orderToModify
 
     def add_drink(self, drinkType, orderNum):
-        orderToModify = self.orders[str(self.ordernum)]
+        orderToModify = self.orders[str(self.orderNums)]
         drink = self.orderBuilder.make_drink(drinkType)
         orderToModify.add_drink(drink)
-        self.orders[str(self.ordernum)] = orderToModify
+        self.orders[str(self.orderNums)] = orderToModify
 
     def delete_drink(self, drinkNum, orderNum):
-        orderToModify = self.orders[str(self.ordernum)]
+        orderToModify = self.orders[str(self.order/nums)]
         orderToModify.remove_drink(drinkNum)
-        self.orders[str(self.ordernum)] = orderToModify
+        self.orders[str(self.orderNums)] = orderToModify
 
     # Returns a specific order as a json string
     def get_order(self, orderNum):
-        orderToModify = self.orders[str(self.ordernum)]
+        orderToModify = self.orders[str(self.orderNums)]
         json_string = json.dumps(orderToModify)
         return json_string
 

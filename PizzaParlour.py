@@ -45,5 +45,20 @@ def add_pizza_type():
     results = parlour.add_pizza_to_menu(toppings, pizza_name)
     return results
 
+@app.route('/menu/new_order', methods = ['POST'])
+def new_order():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    numPizzas = order_details['numPizzas']
+    numDrinks = order_details['numDrinks']
+    size = order_details['size']
+    type = order_details['type']
+    toppings = order_details['toppings']
+    drinks = order_details['drinks']
+
+    results = parlour.new_order(numPizzas, numDrinks, size, type, toppings, drinks)
+    return results
+
 if __name__ == "__main__":
     app.run(debug = True)

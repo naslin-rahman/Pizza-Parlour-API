@@ -14,19 +14,19 @@ def cli():
 
         elif (view_menu == "no"):
             item = input("Please enter item name to see cost\n")
-            
+
             dict = {}
             dict["name"] = item
 
             json_string = json.dumps(dict)
-            
+
             r = requests.get('http://127.0.0.1:5000/menu/price', json=json_string)
 
             print(r.text)
 
     if (action == "add custom pizza"):
-        toppings = input("What toppings would you like on your new custom pizza?")
-        pizzaName = input("What would you like to call your custom pizza?")
+        toppings = input("What toppings would you like on your new custom pizza?\n")
+        pizzaName = input("What would you like to call your custom pizza?\n")
 
         dict = {}
         dict["toppings"] = toppings
@@ -44,17 +44,36 @@ def cli():
         countedPizzas = 0
         countedDrinks = 0
         numPizzas = input("How many pizzas would you like?\n")
+        size = ['Small'] * int(numPizzas)
+        type = [''] * int(numPizzas)
+        toppings = [''] * int(numPizzas)
 
         while (countedPizzas != int(numPizzas)):
             #Enter pizza vals
-            pizzaOrder = input(f"Enter pizza order (size, type, toppings) for Pizza #{countedPizzas + 1} \n")
+            size[countedPizzas] = input("Pizza #{countedPizzas + 1} \nEnter pizza size (Small, Medium, Large): \n")
+            type[countedPizzas] = input("Enter valid pizza type: \n")
+            toppings[countedPizzas] = input("Enter extra toppings (seperated by a single comma): ")
             countedPizzas += 1
 
         numDrinks = input("How many drinks would you like?\n")
+        drinks = [''] * int(numDrinks)
         while (countedDrinks != int(numDrinks)):
             #Enter pizza vals
-            drinkOrder = input(f"Enter drink name for Drink #{countedDrinks + 1} \n")
+            drinks[countedDrinks] = input(f"Enter drink name for Drink #{countedDrinks + 1} \n")
             countedDrinks += 1
+
+        dict = {}
+        dict['numPizzas'] = numPizzas
+        dict['numDrinks'] = numDrinks
+        dict['size'] = size
+        dict['type'] = type
+        dict['toppings'] = toppings
+        dict['drinks'] = drinks
+        json_string = json.dumps(dict)
+
+        result = requests.post('http://127.0.0.1:5000/menu/new_order', json=json_string)
+
+        print(result.text)
 
     if (action == "update"):
         while(True):

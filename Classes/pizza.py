@@ -17,7 +17,10 @@ class Pizza:
       for topping in self.toppings:
           toppingCost += menu.toppings.get(topping)
 
-      return baseCost + toppingCost
+      cost = baseCost + toppingCost
+      cost = cost * menu.sizes[self.size]
+
+      return cost
 
   # Might bot
   def add_toppings(self, toAdd):

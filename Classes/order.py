@@ -44,3 +44,5 @@ class Order:
 
       for drink in self.drinks.values():
           cost += drinks.get_cost(menu)
+
+      return cost

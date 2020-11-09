@@ -33,6 +33,23 @@ class Menu:
           "Beef" : 0.5,
           "Pepperoni": 0.35
       }
+      self.sizes = {
+          "Small" : 1,
+          "Medium": 1.25,
+          "Large": 1.5
+      }
+
+  def check_valid_pizza(self, pizzaType):
+      return pizzaType in self.pizzas
+
+  def check_valid_drink(self, drinkType):
+      return drinkType in self.drinks
+
+  def check_valid_toppings(self, toppingType):
+      return toppingType in self.toppings
+
+  def check_valid_sizes(self, size):
+      return size in self.sizes
 
   def get_menu(self):
       menu_temp = {}
@@ -40,6 +57,7 @@ class Menu:
       menu_temp["pizzasPrep"] = self.pizzasPrep
       menu_temp["drinks"] = self.drinks
       menu_temp["toppings"] = self.toppings
+      menu_temp["sizes"] = self.sizes
       return menu_temp
 
   def get_pizza_price(self, pizzaType):
