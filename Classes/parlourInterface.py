@@ -62,3 +62,6 @@ class ParlourInterface:
         result = self.menu.add_pizza_type(newPizza, toppings)
 
         return result
+
+    def menu_get(self):
+        return self.menu

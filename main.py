@@ -14,6 +14,15 @@ def cli():
 
         elif (view_menu == "no"):
             item = input("Please enter item name to see cost\n")
+            
+            dict = {}
+            dict["name"] = item
+
+            json_string = json.dumps(dict)
+            
+            r = requests.get('http://127.0.0.1:5000/menu/price', json=json_string)
+
+            print(r.text)
 
     if (action == "add custom pizza"):
         toppings = input("What toppings would you like on your new custom pizza?")
