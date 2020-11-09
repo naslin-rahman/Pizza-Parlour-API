@@ -6,6 +6,16 @@ class OrderBuilder:
     def __init__(self):
         pass
 
+    def check_valid_pizza(self, pizzaSize, pizzaType, pizzaToppings, menu):
+        for topping in pizzaToppings:
+            if not (menu.check_valid_toppings(topping)):
+                return -1
+
+        return menu.check_valid_pizza(pizzaType) and menu.check_valid_sizes(pizzaSize)
+
+    def check_valid_drink(self, drinkType, menu):
+        return menu.check_valid_drink(drinkType)
+
     def make_pizza(self, size, type, toppings):
         pizza = Pizza(size, type, toppings)
         return pizza
@@ -25,18 +35,14 @@ class OrderBuilder:
             # TODO: add checking if valid
             toppings = pizzaToppings[p].split(',')
 
-            for topping in toppings:
-                if not (menu.check_valid_toppings(topping)):
-                    return -1
-
-            if (menu.check_valid_pizza(pizzaType[p]) and menu.check_valid_sizes(pizzaSize[p])):
+            if (self.check_valid_pizza(pizzaSize[p], pizzaType[p], toppings, menu)):
                 pizza = self.make_pizza(pizzaSize[p], pizzaType[p], toppings)
                 order.add_pizza(pizza)
             else:
                 return -1
 
         for d in range(int(numDrinks)):
-            if (menu.check_valid_drink(drinkType[d])):
+            if (self.check_valid_drink(drinkType[d], menu)):
                 drink = self.make_drink(drinkType[d])
                 order.add_drink(drink)
             else:

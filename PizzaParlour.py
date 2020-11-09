@@ -34,7 +34,7 @@ def get_item_price():
         return str(menu.get_topping_price(item_name))
 
 
-@app.route('/menu/add_pizza', methods = ['POST'])
+@app.route('/menu/add_pizza_type', methods = ['POST'])
 def add_pizza_type():
     req_data = request.get_json()
     custom_pizza = json.loads(req_data)
@@ -45,7 +45,7 @@ def add_pizza_type():
     results = parlour.add_pizza_to_menu(toppings, pizza_name)
     return results
 
-@app.route('/menu/new_order', methods = ['POST'])
+@app.route('/new_order', methods = ['POST'])
 def new_order():
     req_data = request.get_json()
     order_details = json.loads(req_data)
@@ -58,6 +58,80 @@ def new_order():
     drinks = order_details['drinks']
 
     results = parlour.new_order(numPizzas, numDrinks, size, type, toppings, drinks)
+
+    return results
+### NEW
+@app.route('/modify_order/add_pizza', methods = ['POST'])
+def add_pizza():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    pizza_size = order_details['new_size']
+    pizza_type = order_details['new_type']
+    pizza_toppings = order_details['new_toppings']
+    order_to_edit = order_details['order_num']
+
+    results = parlour.add_pizza(pizza_size, pizza_type, pizza_toppings, order_to_edit)
+    return results
+
+@app.route('/modify_order/remove_pizza', methods = ['POST'])
+def remove_pizza():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    pizza_num = order_details['pizza_num']
+    order_to_edit = order_details['order_num']
+
+    results = parlour.delete_pizza(pizza_num, order_to_edit)
+    return results
+
+@app.route('/modify_order/modify_pizza', methods = ['POST'])
+def modify_pizza():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    what_to_edit = order_details['what_to_edit']
+    order_to_edit = order_details['order_num']
+    num_pizza_to_update = order_details['pizza_num']
+    new_size = order_details['new_size']
+    new_type = order_details['new_type']
+    new_toppings = order_details['new_toppings']
+
+    results = parlour.modify_pizza(new_size, new_type, new_toppings, order_to_edit, num_pizza_to_update, what_to_edit)
+    return results
+
+@app.route('/modify_order/add_drink', methods = ['POST'])
+def add_drink():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    new_drink = order_details['new_drink']
+    order_to_edit = order_details['order_num']
+
+    results = parlour.add_drink(new_drink, order_to_edit)
+    return results
+
+@app.route('/modify_order/remove_drink', methods = ['POST'])
+def remove_drink():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    order_num = order_details['order_num']
+    drink_num = order_details['drink_num']
+
+    results = parlour.delete_drink(drink_num, order_num)
+    return results
+
+@app.route('/modify_order/modify_drink', methods = ['POST'])
+def modify_drink():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    order_to_edit = order_details['order_num']
+    num_drink_to_update = order_details['drink_num']
+    new_drink = order_details['new_drink']
+
+    results = parlour.modify_drink(new_drink, num_drink_to_update, order_to_edit)
     return results
 
 if __name__ == "__main__":

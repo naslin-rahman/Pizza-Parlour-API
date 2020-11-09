@@ -24,8 +24,21 @@ class Order:
       self.pizzas[str(self.pizzaNum)] = pizza
 
   def remove_pizza(self, pizzaNum):
-      del self.pizzas[str(pizzaNum)]
-      self.numPizzas -= 1
+      if pizzaNum in self.pizzas:
+          del self.pizzas[str(pizzaNum)]
+          self.numPizzas -= 1
+          return "Pizza successfully removed"
+      else:
+          return "Pizza you're trying to remove does not exist"
+
+  def change_size(self, size, pizzaNum):
+      self.pizzas[str(pizzaNum)].change_size(size)
+
+  def change_type(self, type, pizzaNum):
+      self.pizzas[str(pizzaNum)].change_type(type)
+
+  def change_toppings(self, toppings, pizzaNum):
+      self.pizzas[str(pizzaNum)].change_toppings(toppings)
 
   def add_drink(self, drink):
       self.drinkNum += 1
@@ -33,9 +46,16 @@ class Order:
 
       self.drinks[str(self.drinkNum)] = drink
 
-  def remove_drink(self, drink):
-      del self.drinks[str(drinkNum)]
-      self.numDrinks -= 1
+  def remove_drink(self, drinkNum):
+      if drinkNum in self.drinks:
+          del self.drinks[str(drinkNum)]
+          self.numDrinks -= 1
+          return "Drink successfully removed"
+      else:
+          return "Drink you're trying to remove does not exist"
+
+  def change_drink(self, drink_type, drink_num):
+      self.drinks[str(drink_num)].change_type(drink_type)
 
   def get_cost(self, menu):
       cost = 0
@@ -43,6 +63,6 @@ class Order:
           cost += pizza.get_cost(menu)
 
       for drink in self.drinks.values():
-          cost += drinks.get_cost(menu)
+          cost += drink.get_cost(menu)
 
       return cost

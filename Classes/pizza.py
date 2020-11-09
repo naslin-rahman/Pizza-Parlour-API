@@ -15,7 +15,8 @@ class Pizza:
       baseCost = menu.pizzas.get(self.type)
       toppingCost = 0
       for topping in self.toppings:
-          toppingCost += menu.toppings.get(topping)
+          if (topping != ""):
+              toppingCost += menu.toppings.get(topping)
 
       cost = baseCost + toppingCost
       cost = cost * menu.sizes[self.size]
@@ -31,3 +32,9 @@ class Pizza:
 
   def change_size(self, size):
       self.size = size
+
+  def change_type(self, type):
+      self.type = type
+
+  def change_toppings(self, toppings):
+      self.toppings = toppings
