@@ -50,3 +50,12 @@ class Menu:
 
   def get_pizza_price(self, toppingType):
       return self.toppings[toppingType]
+
+  def add_pizza(self, pizza, toppings):
+       cost = 10
+
+       for topping in toppings:
+           cost += self.menu.toppings[topping]
+           
+       self.pizzas[newPizza] = cost
+       self.pizzasPrep[newPizza] = toppings
