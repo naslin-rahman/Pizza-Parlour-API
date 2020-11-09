@@ -6,12 +6,10 @@ class Pizza:
     self.type = type
     self.toppings = toppings
 
-    self.cost = getCost(self)
-
-  def makePizza(self):
+  def make_pizza(self):
       return self
 
-  def getCost(self, menu):
+  def get_cost(self, menu):
       cost = 0
       # Switch based on type + toppings + size for cost
       baseCost = menu.pizzas.get(self.type)
@@ -22,11 +20,11 @@ class Pizza:
       return baseCost + toppingCost
 
   # Might bot
-  def addToppings(self, toAdd):
+  def add_toppings(self, toAdd):
       self.toppings.append(toAdd)
 
-  def removeToppings(self, toRemove):
+  def remove_toppings(self, toRemove):
       self.toRemove
 
-  def changeSize(self, size):
+  def change_size(self, size):
       self.size = size

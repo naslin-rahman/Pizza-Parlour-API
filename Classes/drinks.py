@@ -4,5 +4,5 @@ class Drinks:
   def __init__(self, type):
     self.type = type
 
-  def getCost(self, menu):
+  def get_cost(self, menu):
       return menu.drinks.get(self.type)

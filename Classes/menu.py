@@ -34,10 +34,19 @@ class Menu:
           "Pepperoni": 0.35
       }
 
-  def getMenu(self):
+  def get_menu(self):
       menu_temp = {}
       menu_temp["pizzas"] = self.pizzas
       menu_temp["pizzasPrep"] = self.pizzasPrep
       menu_temp["drinks"] = self.drinks
       menu_temp["toppings"] = self.toppings
       return menu_temp
+
+  def get_pizza_price(self, pizzaType):
+      return self.pizzas[pizzaType]
+
+  def get_drink_price(self, drinkType):
+      return self.drinks[drinkType]
+
+  def get_pizza_price(self, toppingType):
+      return self.toppings[toppingType]

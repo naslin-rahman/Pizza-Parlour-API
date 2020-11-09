@@ -13,7 +13,7 @@ class ParlourInterface:
         self.orders = {}
         self.orderBuilder = OrderBuilder()
 
-    def newOrder(self, pizzaSize, pizzaType, pizzaToppings, drinkType):
+    def new_order(self, pizzaSize, pizzaType, pizzaToppings, drinkType):
         # Assumes valid pizza size as string, valid pizza type as string
         # Assumes valid pizzaToppings as an array of strings
         # Assumes valid drinkType as strings
@@ -21,47 +21,38 @@ class ParlourInterface:
         # TODO: Add empty cases - ex no dirnk just pizza
         # TODO: Add able to modify indiv orders
         self.orderNum += 1
-        order = self.orderBuilder.buildOrder(pizzaSize, pizzaType, pizzaToppings, drinkType, self.orderNum)
+        order = self.orderBuilder.build_order(pizzaSize, pizzaType, pizzaToppings, drinkType, self.orderNum)
         self.orders[str(self.ordernum)] = order
 
-    def addPizza(self, pizzaSize, pizzaType, pizzaToppings, orderNum):
+    def add_pizza(self, pizzaSize, pizzaType, pizzaToppings, orderNum):
         orderToModify = self.orders[str(self.ordernum)]
-        pizza = self.orderBuilder.makePizza(pizzaSize, pizzaType, pizzaToppings)
-        orderToModify.addPizza(pizza)
+        pizza = self.orderBuilder.make_pizza(pizzaSize, pizzaType, pizzaToppings)
+        orderToModify.add_pizza(pizza)
         self.orders[str(self.ordernum)] = orderToModify
 
-    def deletePizza(self, pizzaNum, orderNum):
+    def delete_pizza(self, pizzaNum, orderNum):
         orderToModify = self.orders[str(self.ordernum)]
-        orderToModify.removePizza(pizzaNum)
+        orderToModify.remove_pizza(pizzaNum)
         self.orders[str(self.ordernum)] = orderToModify
 
-    def addDrink(self, drinkType, orderNum):
+    def add_drink(self, drinkType, orderNum):
         orderToModify = self.orders[str(self.ordernum)]
-        drink = self.orderBuilder.makeDrink(drinkType)
-        orderToModify.addDrink(drink)
+        drink = self.orderBuilder.make_drink(drinkType)
+        orderToModify.add_drink(drink)
         self.orders[str(self.ordernum)] = orderToModify
 
-    def deleteDrink(self, drinkNum, orderNum):
+    def delete_drink(self, drinkNum, orderNum):
         orderToModify = self.orders[str(self.ordernum)]
-        orderToModify.removeDrink(drinkNum)
+        orderToModify.remove_drink(drinkNum)
         self.orders[str(self.ordernum)] = orderToModify
-
-    def addPizzaType(self, newType, toppingCombo, cost):
-        # TODO add auto calc
-        # Maybe 10 for base then add topping costs
-        self.menu.pizzas[newType] = cost
-        self.menu.pizzasPrep[newType] = toppingCombo
-
-    def addDrinkType(self, newType, cost):
-        self.menu.drinks[newType] = cost
 
     # Returns a specific order as a json string
-    def getOrder(self, orderNum):
+    def get_order(self, orderNum):
         orderToModify = self.orders[str(self.ordernum)]
         json_string = json.dumps(orderToModify)
         return json_string
 
-    def getMenu(self):
-        menu = self.menu.getMenu()
+    def get_menu(self):
+        menu = self.menu.get_menu()
         json_string = json.dumps(menu)
         return json_string

@@ -17,30 +17,30 @@ class Order:
     self.pizzas = {}
     self.drinks = {}
 
-  def addPizza(self, pizza):
+  def add_pizza(self, pizza):
       self.pizzaNum += 1
       self.numPizzas += 1
 
       self.pizzas[str(self.pizzaNum)] = pizza
 
-  def removePizza(self, pizzaNum):
+  def remove_pizza(self, pizzaNum):
       del self.pizzas[str(pizzaNum)]
       self.numPizzas -= 1
 
-  def addDrink(self, drink):
+  def add_drink(self, drink):
       self.drinkNum += 1
       self.numDrinks += 1
 
       self.drinks[str(self.drinkNum)] = drink
 
-  def removeDrink(self, drink):
+  def remove_drink(self, drink):
       del self.drinks[str(drinkNum)]
       self.numDrinks -= 1
 
-  def getCost(self, menu):
+  def get_cost(self, menu):
       cost = 0
       for pizza in self.pizzas.values():
-          cost += pizza.getCost(menu)
+          cost += pizza.get_cost(menu)
 
       for drink in self.drinks.values():
-          cost += drinks.getCost(menu)
+          cost += drinks.get_cost(menu)

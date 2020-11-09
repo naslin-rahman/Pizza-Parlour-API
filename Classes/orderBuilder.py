@@ -6,23 +6,23 @@ class OrderBuilder:
     def __init__(self):
         pass
 
-    def makePizza(self, size, type, toppings):
+    def make_pizza(self, size, type, toppings):
         pizza = Pizza(size, type, toppings)
         return pizza
 
-    def makeDrink(self, type):
+    def make_drink(self, type):
         drink = Drink(type)
         return drink
 
-    def makeOrder(self, ordernum):
+    def make_order(self, ordernum):
         order = Order(ordernum)
         return order
 
-    def buildOrder(self, pizzaSize, pizzaType, pizzaToppings, drinkType, orderNum):
-        pizza = makePizza(pizzaSize, pizzaType, pizzaToppings)
-        drink = makeDrink(drinkType)
-        order = makeOrder(orderNum)
-        order.addPizza(pizza)
-        order.addDrink(drink)
+    def build_order(self, pizzaSize, pizzaType, pizzaToppings, drinkType, orderNum):
+        pizza = make_pizza(pizzaSize, pizzaType, pizzaToppings)
+        drink = make_drink(drinkType)
+        order = make_order(orderNum)
+        order.add_pizza(pizza)
+        order.add_drink(drink)
 
         return order
