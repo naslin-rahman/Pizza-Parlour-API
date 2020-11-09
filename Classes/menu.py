@@ -48,5 +48,5 @@ class Menu:
   def get_drink_price(self, drinkType):
       return self.drinks[drinkType]
 
-  def get_pizza_price(self, toppingType):
+  def get_topping_price(self, toppingType):
       return self.toppings[toppingType]
