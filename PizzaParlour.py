@@ -11,7 +11,7 @@ def welcome_pizza():
 def menu():
     # Return the entire menu
     parlour = ParlourInterface()
-    menu = parlour.getMenu()
+    #menu = parlour.getMenu()
     return parlour.getMenu()
 
 @app.route('/menu/price', methods = ['GET'])
@@ -20,4 +20,4 @@ def get_item_price():
     return 'This is the menu item price'
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug = True)
