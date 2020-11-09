@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from Classes.parlourInterface import ParlourInterface
+import json
 
 app = Flask("Assignment 2")
 parlour = ParlourInterface()
@@ -18,6 +19,17 @@ def menu():
 def get_item_price(item_name):
     # TODO
     return 'This is the menu item price'
+
+@app.route('/menu/add_pizza', methods = ['POST'])
+def add_pizza_type():
+    req_data = request.get_json()
+    custom_pizza = json.loads(req_data)
+
+    pizza_name = custom_pizza['pizzaName']
+    toppings = custom_pizza['toppings']
+
+    results = parlour.add_pizza_to_menu(toppings, pizza_name)
+    return results
 
 if __name__ == "__main__":
     app.run(debug = True)

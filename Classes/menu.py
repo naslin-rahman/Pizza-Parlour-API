@@ -51,11 +51,16 @@ class Menu:
   def get_topping_price(self, toppingType):
       return self.toppings[toppingType]
 
-  def add_pizza(self, pizza, toppings):
+  def add_pizza_type(self, pizza, toppings):
        cost = 10
 
        for topping in toppings:
-           cost += self.menu.toppings[topping]
-           
-       self.pizzas[newPizza] = cost
-       self.pizzasPrep[newPizza] = toppings
+           if topping in self.toppings:
+               cost += self.toppings[topping]
+           else:
+               return "Topping not found"
+
+       self.pizzas[str(pizza)] = cost
+       self.pizzasPrep[str(pizza)] = toppings
+
+       return "Pizza successfully added to menu"

@@ -56,3 +56,9 @@ class ParlourInterface:
         menu = self.menu.get_menu()
         json_string = json.dumps(menu)
         return json_string
+
+    def add_pizza_to_menu(self, toppingsStr, newPizza):
+        toppings = toppingsStr.split(',')
+        result = self.menu.add_pizza_type(newPizza, toppings)
+
+        return result
