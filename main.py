@@ -202,9 +202,27 @@ def cli():
                 else:
                     pass
 
-                done = input("Are you done?\n [1] Yes   [2] No\n")
+                done = input("Are you done ordering?\n [1] Yes   [2] No\n")
                 if (done == "1"):
                     break
+        
+    # Ask user what delivery method they want
+    deliveryType = input("Enter your method of delivery:\n")
+    if (deliveryType == "Uber eats"):
+        order_num = input("Enter your order: #\n")
+        address = input("Enter your address:\n")
+
+        dict = {}
+        dict["orderNum"] = int(order_num)
+        dict["address"] = address
+
+        json_string = json.dumps(dict)
+
+        result = requests.post('http://127.0.0.1:5000/deliver', json=json_string)
+        print(result.text)
+    
+    elif (deliveryType == "Pickup"):
+        print("Your order is on its way!")
 
 if __name__ == "__main__":
     os.system('curl http://127.0.0.1:5000/pizza')

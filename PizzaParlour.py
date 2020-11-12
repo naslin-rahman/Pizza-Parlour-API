@@ -134,5 +134,15 @@ def modify_drink():
     results = parlour.modify_drink(new_drink, num_drink_to_update, order_to_edit)
     return results
 
+@app.route('/deliver', methods = ['POST'])
+def deliver():
+    req_data = request.get_json()
+    order_info = json.loads(req_data)
+    order = order_info['orderNum']
+    address = order_info['address']
+
+    #details = parlour.get_order(order)
+    return "Your delivery is on the way!"
+
 if __name__ == "__main__":
     app.run(debug = True)
