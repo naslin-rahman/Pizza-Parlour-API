@@ -1,5 +1,5 @@
 from flask import Flask, request
-from Classes.parlour import Parlour
+from Classes.Parlour import Parlour
 import json
 
 app = Flask("Assignment 2")

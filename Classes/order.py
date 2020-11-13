@@ -1,55 +1,55 @@
-from Classes.pizza import Pizza
-from Classes.drinks import Drinks
+from Classes.Pizza import Pizza
+from Classes.Drinks import Drinks
 
 class Order:
-  def __init__(self, ordernum):
-    self.ordernum = ordernum
+  def __init__(self, order_num):
+    self.order_num = order_num
     self.cost = 0 # Default
 
     #Used for the creation of pizza in dictionary
-    self.pizzaNum = 0
-    self.drinkNum = 0
+    self.pizza_num = 0
+    self.drink_num = 0
 
     #Used to count the pizzas and dirnks
-    self.numPizzas = 0
-    self.numDrinks = 0
+    self.num_pizzas = 0
+    self.num_drinks = 0
 
     self.pizzas = {}
     self.drinks = {}
 
   def add_pizza(self, pizza):
-      self.pizzaNum += 1
-      self.numPizzas += 1
+      self.pizza_num += 1
+      self.num_pizzas += 1
 
-      self.pizzas[str(self.pizzaNum)] = pizza
+      self.pizzas[str(self.pizza_num)] = pizza
 
-  def remove_pizza(self, pizzaNum):
-      if pizzaNum in self.pizzas:
-          del self.pizzas[str(pizzaNum)]
-          self.numPizzas -= 1
+  def remove_pizza(self, pizza_num):
+      if pizza_num in self.pizzas:
+          del self.pizzas[str(pizza_num)]
+          self.num_pizzas -= 1
           return "Pizza successfully removed"
       else:
           return "Pizza you're trying to remove does not exist"
 
-  def change_size(self, size, pizzaNum):
-      self.pizzas[str(pizzaNum)].change_size(size)
+  def change_size(self, size, pizza_num):
+      self.pizzas[str(pizza_num)].change_size(size)
 
-  def change_type(self, type, pizzaNum):
-      self.pizzas[str(pizzaNum)].change_type(type)
+  def change_type(self, type, pizza_num):
+      self.pizzas[str(pizza_num)].change_type(type)
 
-  def change_toppings(self, toppings, pizzaNum):
-      self.pizzas[str(pizzaNum)].change_toppings(toppings)
+  def change_toppings(self, toppings, pizza_num):
+      self.pizzas[str(pizza_num)].change_toppings(toppings)
 
   def add_drink(self, drink):
-      self.drinkNum += 1
-      self.numDrinks += 1
+      self.drink_num += 1
+      self.num_drinks += 1
 
-      self.drinks[str(self.drinkNum)] = drink
+      self.drinks[str(self.drink_num)] = drink
 
-  def remove_drink(self, drinkNum):
-      if drinkNum in self.drinks:
-          del self.drinks[str(drinkNum)]
-          self.numDrinks -= 1
+  def remove_drink(self, drink_num):
+      if drink_num in self.drinks:
+          del self.drinks[str(drink_num)]
+          self.num_drinks -= 1
           return "Drink successfully removed"
       else:
           return "Drink you're trying to remove does not exist"
