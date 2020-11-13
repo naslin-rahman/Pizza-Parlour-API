@@ -2,6 +2,22 @@ import os
 import json
 import requests
 
+def not_empty(input):
+    return input is not ""
+
+def valid_num_input(input):
+    if input is not "":
+        try:
+            int(input)
+
+            if int(input) >= 0:
+                return True
+            else:
+                return "Negative numbers are not allowed"
+        except ValueError:
+            return "Please enter an integer"
+    return "Please enter a non-empty integer"
+
 def add_custom():
     toppings = input("What toppings would you like on your new custom pizza?\n")
     pizzaName = input("What would you like to call your custom pizza?\n")
@@ -18,32 +34,42 @@ def add_custom():
 
 def show_order():
     order_num = input("What is the number of the order you'd like to see?\n")
-    dict = {}
-    dict["order_num"] = order_num
+    check = valid_num_input(order_num)
 
-    json_string = json.dumps(dict)
+    if (check is not True):
+        print(check)
+    else:
+        dict = {}
+        dict["order_num"] = order_num
 
-    r = requests.post('http://127.0.0.1:5000/show_order', json=json_string)
+        json_string = json.dumps(dict)
 
-    print(r.text)
+        r = requests.post('http://127.0.0.1:5000/show_order', json=json_string)
+
+        print(r.text)
 
 def cancel_order():
     order_num = input("What is the number of the order you'd like to cancel?\n")
-    dict = {}
-    dict["order_num"] = order_num
+    check = valid_num_input(order_num)
 
-    json_string = json.dumps(dict)
+    if (check is not True):
+        print(check)
+    else:
+        dict = {}
+        dict["order_num"] = order_num
 
-    r = requests.post('http://127.0.0.1:5000/cancel_order', json=json_string)
+        json_string = json.dumps(dict)
 
-    print(r.text)
+        r = requests.post('http://127.0.0.1:5000/cancel_order', json=json_string)
+
+        print(r.text)
 
 def show_menu():
-    view_menu = input("Would you like to view the entire menu?\n")
-    if (view_menu == "yes"):
+    view_menu = input("Would you like to view the entire menu?\n[1] Yes     [2] No\n")
+    if (view_menu == "1"):
         os.system('curl http://127.0.0.1:5000/menu') # A get request i think?
 
-    elif (view_menu == "no"):
+    elif (view_menu == "2"):
         item = input("Please enter item name to see cost\n")
 
         dict = {}
@@ -54,91 +80,109 @@ def show_menu():
         r = requests.get('http://127.0.0.1:5000/menu/price', json=json_string)
 
         print("$" + r.text)
+    else:
+        print ("Not a valid option")
 
 def order_pizzas_drinks():
     #Enter number of pizzas and drinks
     countedPizzas = 0
     countedDrinks = 0
     numPizzas = input("How many pizzas would you like?\n")
-    size = ['Small'] * int(numPizzas)
-    type = [''] * int(numPizzas)
-    toppings = [''] * int(numPizzas)
-    invalid = False
-    while (countedPizzas != int(numPizzas) and not invalid):
-        #Enter pizza vals
-        size[countedPizzas] = input(f"Pizza #{countedPizzas + 1} \nWhat pizza size?\n[1] Small      [2] Medium      [3] Large \n")
-        if (size[countedPizzas] == '1'):
-            size[countedPizzas] = 'Small'
-        elif (size[countedPizzas] == '2'):
-            size[countedPizzas] = 'Medium'
-        elif (size[countedPizzas] == '3'):
-            size[countedPizzas] = 'Large'
-        else:
-            print("Invalid size\n")
-            invalid = True
-            break;
-        type[countedPizzas] = input("Enter valid pizza type: \n")
-        toppings[countedPizzas] = input("Enter extra toppings (seperated by a single comma): ")
-        countedPizzas += 1
+    check = valid_num_input(numPizzas)
 
-    if invalid is not True:
-        numDrinks = input("How many drinks would you like?\n")
-        drinks = [''] * int(numDrinks)
-
-
-        while (countedDrinks != int(numDrinks)):
+    if (check is not True):
+        print(check)
+    else:
+        size = ['Small'] * int(numPizzas)
+        type = [''] * int(numPizzas)
+        toppings = [''] * int(numPizzas)
+        invalid = False
+        while (countedPizzas != int(numPizzas) and not invalid):
             #Enter pizza vals
-            drinks[countedDrinks] = input(f"Enter drink name for Drink #{countedDrinks + 1} \n")
-            countedDrinks += 1
+            size[countedPizzas] = input(f"Pizza #{countedPizzas + 1} \nWhat pizza size?\n[1] Small      [2] Medium      [3] Large \n")
+            if (size[countedPizzas] == '1'):
+                size[countedPizzas] = 'Small'
+            elif (size[countedPizzas] == '2'):
+                size[countedPizzas] = 'Medium'
+            elif (size[countedPizzas] == '3'):
+                size[countedPizzas] = 'Large'
+            else:
+                print("Invalid option\n")
+                invalid = True
+                break;
+            type[countedPizzas] = input("Enter valid pizza type: \n")
+            toppings[countedPizzas] = input("Enter extra toppings (seperated by a single comma): ")
+            countedPizzas += 1
 
-        dict = {}
-        dict['numPizzas'] = numPizzas
-        dict['numDrinks'] = numDrinks
-        dict['size'] = size
-        dict['type'] = type
-        dict['toppings'] = toppings
-        dict['drinks'] = drinks
-        json_string = json.dumps(dict)
+        if invalid is not True:
+            numDrinks = input("How many drinks would you like?\n")
+            check = valid_num_input(numDrinks)
 
-        result = requests.post('http://127.0.0.1:5000/new_order', json=json_string)
+            if (check is not True):
+                print(check)
+            else:
+                drinks = [''] * int(numDrinks)
 
-        print(result.text)
+                while (countedDrinks != int(numDrinks)):
+                    #Enter pizza vals
+                    drinks[countedDrinks] = input(f"Enter drink name for Drink #{countedDrinks + 1} \n")
+                    countedDrinks += 1
+
+                dict = {}
+                dict['numPizzas'] = numPizzas
+                dict['numDrinks'] = numDrinks
+                dict['size'] = size
+                dict['type'] = type
+                dict['toppings'] = toppings
+                dict['drinks'] = drinks
+                json_string = json.dumps(dict)
+
+                result = requests.post('http://127.0.0.1:5000/new_order', json=json_string)
+
+                print(result.text)
 
 def update_pizzas(types_of_edit):
     if (types_of_edit == "3"):
         num_pizza_to_update = input("Enter the pizza number you want to edit\n")
-        what_to_edit = input("What would you like to edit?\n[1] Size    [2] Type    [3] Toppings\n")
+        check = valid_num_input(num_pizza_to_update)
 
-        new_size = ""
-        new_type = ""
-        new_toppings = ""
-
-        if (what_to_edit == "1"):
-            new_size = input("New size of pizza? (Small, Medium, Large)\n")
-
-        elif(what_to_edit == "2"):
-            new_type = input("New pizza type?\n")
-
-        elif(what_to_edit == "3"):
-            new_toppings = input("New toppings combo? \n")
-
+        if (check is not True):
+            print(check)
         else:
-            print("Not a valid option\n")
+            what_to_edit = input("What would you like to edit?\n[1] Size    [2] Type    [3] Toppings\n")
 
-        dict = {}
-        dict['what_to_edit'] = what_to_edit
-        dict['order_num'] = order_to_edit
-        dict['pizza_num'] = num_pizza_to_update
-        dict['new_size'] = new_size
-        dict['new_type'] = new_type
-        dict['new_toppings'] = new_toppings
-        json_string = json.dumps(dict)
+            cont = True
+            new_size = ""
+            new_type = ""
+            new_toppings = ""
 
-        result = requests.post('http://127.0.0.1:5000/modify_order/modify_pizza', json=json_string)
+            if (what_to_edit == "1"):
+                new_size = input("New size of pizza? (Small, Medium, Large)\n")
 
-        print(result.text)
+            elif(what_to_edit == "2"):
+                new_type = input("New pizza type?\n")
 
-        # TODO add link and print results
+            elif(what_to_edit == "3"):
+                new_toppings = input("New toppings combo? \n")
+
+            else:
+                cont = False
+                print("Not a valid option\n")
+
+            if cont:
+                dict = {}
+                dict['what_to_edit'] = what_to_edit
+                dict['order_num'] = order_to_edit
+                dict['pizza_num'] = num_pizza_to_update
+                dict['new_size'] = new_size
+                dict['new_type'] = new_type
+                dict['new_toppings'] = new_toppings
+                json_string = json.dumps(dict)
+
+                result = requests.post('http://127.0.0.1:5000/modify_order/modify_pizza', json=json_string)
+
+                print(result.text)
+
     elif (types_of_edit == "1"):
         size = input("Enter pizza size (Small, Medium, Large): \n")
         type = input("Enter valid pizza type: \n")
@@ -157,30 +201,39 @@ def update_pizzas(types_of_edit):
 
     elif (types_of_edit == "2"):
         pizza_num = input("Enter the pizza num you'd like to remove\n")
+        check = valid_num_input(pizza_num)
 
-        dict = {}
-        dict['order_num'] = order_to_edit
-        dict['pizza_num'] = pizza_num
-        json_string = json.dumps(dict)
+        if (check is not True):
+            print(check)
+        else:
+            dict = {}
+            dict['order_num'] = order_to_edit
+            dict['pizza_num'] = pizza_num
+            json_string = json.dumps(dict)
 
-        result = requests.post('http://127.0.0.1:5000/modify_order/remove_pizza', json=json_string)
+            result = requests.post('http://127.0.0.1:5000/modify_order/remove_pizza', json=json_string)
 
-        print(result.text)
+            print(result.text)
 
 def update_drinks(types_of_edit):
     if (types_of_edit == "3"):
         num_drink_to_update = input("Enter the drink number you want to edit\n")
-        new_drink = input("New drink type? \n")
+        check = valid_num_input(num_drink_to_update)
 
-        dict = {}
-        dict['order_num'] = order_to_edit
-        dict['drink_num'] = num_drink_to_update
-        dict['new_drink'] = new_drink
-        json_string = json.dumps(dict)
+        if (check is not True):
+            print(check)
+        else:
+            new_drink = input("New drink type? \n")
 
-        result = requests.post('http://127.0.0.1:5000/modify_order/modify_drink', json=json_string)
+            dict = {}
+            dict['order_num'] = order_to_edit
+            dict['drink_num'] = num_drink_to_update
+            dict['new_drink'] = new_drink
+            json_string = json.dumps(dict)
 
-        print(result.text)
+            result = requests.post('http://127.0.0.1:5000/modify_order/modify_drink', json=json_string)
+
+            print(result.text)
 
         # TODO add link and print results
     elif (types_of_edit == "1"):
@@ -197,15 +250,19 @@ def update_drinks(types_of_edit):
 
     elif (types_of_edit == "2"):
         drink_num = input("Enter the drink num you'd like to remove\n")
+        check = valid_num_input(drink_num)
 
-        dict = {}
-        dict['order_num'] = order_to_edit
-        dict['drink_num'] = drink_num
-        json_string = json.dumps(dict)
+        if (check is not True):
+            print(check)
+        else:
+            dict = {}
+            dict['order_num'] = order_to_edit
+            dict['drink_num'] = drink_num
+            json_string = json.dumps(dict)
 
-        result = requests.post('http://127.0.0.1:5000/modify_order/remove_drink', json=json_string)
+            result = requests.post('http://127.0.0.1:5000/modify_order/remove_drink', json=json_string)
 
-        print(result.text)
+            print(result.text)
 
 def update_order():
     while(True):

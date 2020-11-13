@@ -32,6 +32,8 @@ def get_item_price():
 
     elif (item_name in menu.toppings):
         return str(menu.get_topping_price(item_name))
+    else:
+        return "Not on menu"
 
 
 @app.route('/menu/add_pizza_type', methods = ['POST'])
