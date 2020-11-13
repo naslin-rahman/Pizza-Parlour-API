@@ -56,7 +56,7 @@ class Menu:
 
   # Return if size is on the menu and isnt an empty string
   def check_valid_sizes(self, size):
-      return size in self.sizes and sizes != ""
+      return size in self.sizes and size != ""
 
   # Returns the menu in dict form
   def get_menu(self):
