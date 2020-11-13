@@ -132,12 +132,12 @@ class Parlour:
 
         orderToModify = temp_orders
 
-        json_string = json.dumps(orderToModify)
+        json_string = json.dumps(orderToModify, indent = 4, separators=(',',': '))
         return json_string
 
     def get_menu(self):
         menu = self.menu.get_menu()
-        json_string = json.dumps(menu)
+        json_string = json.dumps(menu, indent = 4, separators=(',',': '))
         return json_string
 
     def add_pizza_to_menu(self, toppingsStr, newPizza):
