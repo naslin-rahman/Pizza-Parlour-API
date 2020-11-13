@@ -82,7 +82,7 @@ class OrderManager:
         pizza = self.order_builder.make_pizza(pizza_size, pizza_type, pizza_toppings)
         orderToModify.add_pizza(pizza)
         self.orders[str(self.order_nums)] = orderToModify
-        return "New pizza Successfully added"
+        return "New pizza successfully added"
 
     # Deletes a specific pizza (pizza_num) from order specified by order_num
     # Returns whether the process was successful
