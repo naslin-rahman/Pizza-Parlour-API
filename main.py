@@ -22,6 +22,17 @@ def cli():
 
             print(r.text)
 
+        if (action == "cancel order"):
+            order_num = input("What is the number of the order you'd like to cancel?\n")
+            dict = {}
+            dict["order_num"] = order_num
+
+            json_string = json.dumps(dict)
+
+            r = requests.post('http://127.0.0.1:5000/cancel_order', json=json_string)
+
+            print(r.text)
+
         if (action == "menu"):
             # TODO enter item and get back price
 

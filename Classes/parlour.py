@@ -124,16 +124,23 @@ class Parlour:
 
         return "Drink successfully removed"
 
+    def cancel_order(self, order_num):
+        if order_num in self.orders:
+            del self.orders[str(order_num)]
+            return "Order successfully removed"
+        else:
+            return "Order you're trying to remove does not exist"
+
     # Returns a specific order as a json string
-    def get_order(self, orderNum):
-        temp_orders = {}
-        for order in self.orders:
-            temp_orders[str(order)] = self.orders[str(order)].get_order(self.menu);
+    def get_order(self, order_num):
+        if order_num in self.orders:
 
-        orderToModify = temp_orders
+            orderToModify = self.orders[str(order_num)].get_order(self.menu);
 
-        json_string = json.dumps(orderToModify, indent = 4, separators=(',',': '))
-        return json_string
+            json_string = json.dumps(orderToModify, indent = 4, separators=(',',': '))
+            return json_string
+        else:
+            return "Order does not exist"
 
     def get_menu(self):
         menu = self.menu.get_menu()

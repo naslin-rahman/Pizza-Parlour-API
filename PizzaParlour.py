@@ -61,6 +61,16 @@ def new_order():
 
     return results
 ### NEW
+@app.route('/cancel_order', methods = ['POST'])
+def cancel_order():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    order_num = order_details['order_num']
+
+    results = parlour.cancel_order(order_num)
+    return results
+
 @app.route('/show_order', methods = ['POST'])
 def show_order():
     req_data = request.get_json()

@@ -40,10 +40,10 @@ class Menu:
       }
 
   def check_valid_pizza(self, pizzaType):
-      return pizzaType in self.pizzas
+      return pizzaType in self.pizzas and pizzaType is not ""
 
   def check_valid_drink(self, drinkType):
-      return drinkType in self.drinks
+      return drinkType in self.drinks and drinkType is not ""
 
   def check_valid_toppings(self, toppingType):
       return toppingType in self.toppings
