@@ -241,22 +241,32 @@ def cli():
                     break
 
     # Ask user what delivery method they want
-    deliveryType = input("Enter your method of delivery:\n")
-    if (deliveryType == "Uber eats"):
-        order_num = input("Enter your order: #\n")
-        address = input("Enter your address:\n")
-
-        dict = {}
-        dict["orderNum"] = int(order_num)
-        dict["address"] = address
-
-        json_string = json.dumps(dict)
-
-        result = requests.post('http://127.0.0.1:5000/deliver', json=json_string)
-        print(result.text)
-
-    elif (deliveryType == "Pickup"):
+    deliveryType = input("Enter your method of delivery (Uber Eats/Pickup/Foodora):\n")
+    
+    if (deliveryType == "Pickup"):
         print("Your order is on its way!")
+
+    else:
+        order_num = input("Enter your order #: \n")
+        address = input("Enter your address:\n")
+        if (deliveryType == "Uber Eats"):
+            dict = {}
+            dict["orderNum"] = int(order_num)
+            dict["address"] = address
+
+            json_string = json.dumps(dict)
+
+            result = requests.post('http://127.0.0.1:5000/deliver/uber', json=json_string)
+            print(result.text)
+        
+        elif (deliveryType == "Foodora"):
+            new_str = order_num + ',' + address
+            dict = {}
+            dict["csv details"] = new_str
+            json_string = json.dumps(dict)
+
+            result = requests.post('http://127.0.0.1:5000/deliver/foodora', json=json_string)
+            print(result.text)
 
 if __name__ == "__main__":
     os.system('curl http://127.0.0.1:5000/pizza')
