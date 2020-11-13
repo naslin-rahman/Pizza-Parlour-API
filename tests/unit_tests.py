@@ -80,7 +80,7 @@ def test_modify_pizza_post():
     new_size = 'Small'
     new_type = ''
     new_toppings = ''
-    
+
     check = modify_pizza_post(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings)
 
     assert(check.status_code == 200)
@@ -92,6 +92,34 @@ def test_delete_pizza_post():
     check = delete_pizza_post(order_to_edit, pizza_num)
     assert(check.status_code == 200)
     assert(check.text == "Pizza successfully removed")
+
+def test_add_one_drink_post():
+    order_to_edit = '2'
+    new_drink = 'Coke'
+    check = add_one_drink_post(order_to_edit, new_drink)
+    assert(check.status_code == 200)
+    assert(check.text == "New drink successfully added")
+
+def test_modify_drink_post():
+    order_to_edit = '2'
+    num_drink_to_update = '2'
+    new_drink = 'Pepsi'
+    check = modify_drink_post(order_to_edit, num_drink_to_update, new_drink)
+    assert(check.status_code == 200)
+    assert(check.text == "Changes succcefully made")
+
+def test_remove_drink_post():
+    order_to_edit = '2'
+    drink_num = '1'
+    check = remove_drink_post(order_to_edit, drink_num)
+    assert(check.status_code == 200)
+    assert(check.text == "Drink successfully removed")
+
+    order_to_edit2 = '2'
+    drink_num2 = '10'
+    check2 = remove_drink_post(order_to_edit2, drink_num2)
+    assert(check2.status_code == 200)
+    assert(check2.text == "Drink doesn't exist")
 
 # Class Menu and drink  and pizza tests #
 def test_get_pizza_price():

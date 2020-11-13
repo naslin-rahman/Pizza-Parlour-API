@@ -50,9 +50,9 @@ class Order:
       if drink_num in self.drinks:
           del self.drinks[str(drink_num)]
           self.num_drinks -= 1
-          return "Drink successfully removed"
+          return True
       else:
-          return "Drink you're trying to remove does not exist"
+          return False
 
   def change_drink(self, drink_type, drink_num):
       self.drinks[str(drink_num)].change_type(drink_type)
