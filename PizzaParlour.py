@@ -1,9 +1,9 @@
 from flask import Flask, request
-from Classes.parlourInterface import ParlourInterface
+from Classes.parlour import Parlour
 import json
 
 app = Flask("Assignment 2")
-parlour = ParlourInterface()
+parlour = Parlour()
 
 @app.route('/pizza')
 def welcome_pizza():
@@ -61,6 +61,16 @@ def new_order():
 
     return results
 ### NEW
+@app.route('/show_order', methods = ['POST'])
+def show_order():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    order_num = order_details['order_num']
+
+    results = parlour.get_order(order_num)
+    return results
+
 @app.route('/modify_order/add_pizza', methods = ['POST'])
 def add_pizza():
     req_data = request.get_json()

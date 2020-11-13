@@ -24,12 +24,6 @@ class Pizza:
       return cost
 
   # Might bot
-  def add_toppings(self, toAdd):
-      self.toppings.append(toAdd)
-
-  def remove_toppings(self, toRemove):
-      self.toRemove
-
   def change_size(self, size):
       self.size = size
 
@@ -38,3 +32,10 @@ class Pizza:
 
   def change_toppings(self, toppings):
       self.toppings = toppings
+
+  def get_pizza(self):
+      pizza_temp = {}
+      pizza_temp['size'] = self.size
+      pizza_temp['type'] = self.type
+      pizza_temp['toppings'] = self.toppings
+      return pizza_temp

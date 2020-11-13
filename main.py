@@ -11,6 +11,17 @@ def cli():
         if (action == "quit"):
             ordering = False
 
+        if (action == "show order"):
+            order_num = input("What is the number of the order you'd like to see?\n")
+            dict = {}
+            dict["order_num"] = order_num
+
+            json_string = json.dumps(dict)
+
+            r = requests.post('http://127.0.0.1:5000/show_order', json=json_string)
+
+            print(r.text)
+
         if (action == "menu"):
             # TODO enter item and get back price
 
@@ -30,7 +41,7 @@ def cli():
 
                 print(r.text)
 
-        if (action == "add custom pizza"):
+        if (action == "custom"):
             toppings = input("What toppings would you like on your new custom pizza?\n")
             pizzaName = input("What would you like to call your custom pizza?\n")
 
@@ -53,17 +64,29 @@ def cli():
             size = ['Small'] * int(numPizzas)
             type = [''] * int(numPizzas)
             toppings = [''] * int(numPizzas)
-
-            while (countedPizzas != int(numPizzas)):
+            invalid = False
+            while (countedPizzas != int(numPizzas) and not invalid):
                 #Enter pizza vals
-                size[countedPizzas] = input(f"Pizza #{countedPizzas + 1} \nEnter pizza size (Small, Medium, Large): \n")
+                size[countedPizzas] = input(f"Pizza #{countedPizzas + 1} \nWhat pizza size?\n[1] Small      [2] Medium      [3] Large \n")
+                if (size[countedPizzas] == '1'):
+                    size[countedPizzas] = 'Small'
+                elif (size[countedPizzas] == '2'):
+                    size[countedPizzas] = 'Medium'
+                elif (size[countedPizzas] == '3'):
+                    size[countedPizzas] = 'Large'
+                else:
+                    print("Invalid size\n")
+                    invalid = True
+                    break;
                 type[countedPizzas] = input("Enter valid pizza type: \n")
                 toppings[countedPizzas] = input("Enter extra toppings (seperated by a single comma): ")
                 countedPizzas += 1
 
             numDrinks = input("How many drinks would you like?\n")
             drinks = [''] * int(numDrinks)
-            while (countedDrinks != int(numDrinks)):
+
+
+            while (countedDrinks != int(numDrinks) and not invalid):
                 #Enter pizza vals
                 drinks[countedDrinks] = input(f"Enter drink name for Drink #{countedDrinks + 1} \n")
                 countedDrinks += 1
@@ -205,7 +228,7 @@ def cli():
                 done = input("Are you done ordering?\n [1] Yes   [2] No\n")
                 if (done == "1"):
                     break
-        
+
     # Ask user what delivery method they want
     deliveryType = input("Enter your method of delivery:\n")
     if (deliveryType == "Uber eats"):
@@ -220,7 +243,7 @@ def cli():
 
         result = requests.post('http://127.0.0.1:5000/deliver', json=json_string)
         print(result.text)
-    
+
     elif (deliveryType == "Pickup"):
         print("Your order is on its way!")
 

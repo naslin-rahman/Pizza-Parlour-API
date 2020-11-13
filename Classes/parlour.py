@@ -6,7 +6,7 @@ from Classes.orderBuilder import OrderBuilder
 import json
 # TODO: Maybe put ordr builder in same file as order
 
-class ParlourInterface:
+class Parlour:
     def __init__(self):
         self.menu = Menu()
         self.orderNums = 0
@@ -126,7 +126,12 @@ class ParlourInterface:
 
     # Returns a specific order as a json string
     def get_order(self, orderNum):
-        orderToModify = self.orders[str(orderNum)]
+        temp_orders = {}
+        for order in self.orders:
+            temp_orders[str(order)] = self.orders[str(order)].get_order(self.menu);
+
+        orderToModify = temp_orders
+
         json_string = json.dumps(orderToModify)
         return json_string
 

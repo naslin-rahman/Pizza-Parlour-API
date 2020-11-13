@@ -57,6 +57,22 @@ class Order:
   def change_drink(self, drink_type, drink_num):
       self.drinks[str(drink_num)].change_type(drink_type)
 
+  def get_order(self, menu):
+      order_temp = {}
+      self.cost = self.get_cost(menu)
+      temp_pizzas = {}
+      for pizza in self.pizzas:
+          temp_pizzas[str(pizza)] = self.pizzas[str(pizza)].get_pizza();
+
+      order_temp["pizzas"] = temp_pizzas
+      temp_drinks = {}
+      for drink in self.drinks:
+          temp_drinks[str(drink)] = self.drinks[str(drink)].get_drink();
+
+      order_temp["drinks"] = temp_drinks
+      order_temp["cost"] = self.cost
+      return order_temp;
+
   def get_cost(self, menu):
       cost = 0
       for pizza in self.pizzas.values():

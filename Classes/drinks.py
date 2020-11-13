@@ -9,3 +9,8 @@ class Drinks:
 
   def get_cost(self, menu):
       return menu.drinks.get(self.type)
+
+  def get_drink(self):
+      drink_temp = {}
+      drink_temp["type"] = self.type
+      return drink_temp
