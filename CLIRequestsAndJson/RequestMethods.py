@@ -14,6 +14,11 @@ def cancel_order_post(order_num):
     json_string = cancel_order_json(order_num)
     return requests.post('http://127.0.0.1:5000/cancel_order', json=json_string)
 
+# Shows the price of a specific item
+def show_menu_item_get(item):
+    json_string = show_menu_item_json(item)
+    return requests.get('http://127.0.0.1:5000/menu/price', json=json_string)
+
 def order_pizzas_drinks_post(num_pizzas, num_drinks, size, type, toppings, drinks):
     json_string = order_pizzas_drinks_json(num_pizzas, num_drinks, size, type, toppings, drinks)
     return requests.post('http://127.0.0.1:5000/new_order', json=json_string)

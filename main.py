@@ -47,11 +47,6 @@ def cancel_order():
         r = cancel_order_post(order_num)
         print(r.text)
 
-# Shows the price of a specific item
-def show_menu_item_get(item):
-    json_string = show_menu_item_get(item)
-    return requests.get('http://127.0.0.1:5000/menu/price', json=json_string)
-
 # Shows eveyrhting on the menu + cost
 def show_menu():
     view_menu = input("Would you like to view the entire menu?\n[1] Yes     [2] No\n")
@@ -265,31 +260,41 @@ def cli():
     ordering = True
 
     while(ordering):
-        action = input("What would you like to do?:\n") #order, menu, item price update, cancel
+        action = input("What would you like to do?:\n\
+        [1] Show an order\n\
+        [2] Cancel an order\n\
+        [3] Show menu\n\
+        [4] Add a custom pizza type\n\
+        [5] Order\n\
+        [6] Make an update to an order\n\
+        [7] Change the price of an item\n\
+        [8] Finish ordering (onto delivery)\n")
+         #order, menu, item price update, cancel
         #print("yeet\n")
-        if (action == "quit"):
-            ordering = False
-
-        if (action == "show order"):
+        if (action == "1"):
             show_order()
 
-        if (action == "cancel order"):
+        if (action == "2"):
             cancel_order()
 
-        if (action == "menu"):
+        if (action == "3"):
             show_menu()
 
-        if (action == "custom"):
+        if (action == "4"):
             add_custom()
 
-        if (action == "order"):
+        if (action == "5"):
             order_pizzas_drinks()
 
-        if (action == "update"):
+        if (action == "6"):
             update_order()
 
-        if (action == "change price"):
+        if (action == "7"):
             change_price()
+
+        if (action == "8"):
+            ordering = False
+
 
     # Ask user what delivery method they want
     delivery_type = input("Enter your method of delivery:\n")

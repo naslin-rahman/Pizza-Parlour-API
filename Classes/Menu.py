@@ -102,13 +102,13 @@ class Menu:
   # Returns whether item price change was successful
   def change_item_price(self, item, new_price):
       if self.check_valid_pizza(item):
-          self.pizzas[str(item)] = new_price
+          self.pizzas[str(item)] = int(new_price)
       elif self.check_valid_drink(item):
-          self.drinks[str(item)] = new_price
+          self.drinks[str(item)] = int(new_price)
       elif self.check_valid_toppings(item):
-          self.toppings[str(item)] = new_price
+          self.toppings[str(item)] = int(new_price)
       elif self.check_valid_sizes(item):
-          self.sizes[str(item)] = new_price
+          self.sizes[str(item)] = int(new_price)
       else:
           return "Not a valid item"
 
