@@ -6,8 +6,8 @@ from Classes.Pizza import Pizza
 from Classes.Parlour import Parlour
 from Classes.OrderBuilder import OrderBuilder
 from Classes.OrderManager import OrderManager
-from RequestMethods import *
-from JsonMethods import *
+from CLIRequestsAndJson.RequestMethods import *
+from CLIRequestsAndJson.JsonMethods import *
 from main import *
 
 def test_pizza():

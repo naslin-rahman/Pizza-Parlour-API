@@ -1,5 +1,5 @@
 import os
-from RequestMethods import *
+from CLIRequestsAndJson.RequestMethods import *
 
 def valid_num_input(input):
     if input != "":

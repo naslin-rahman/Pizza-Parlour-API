@@ -1,4 +1,4 @@
-from JsonMethods import *
+from CLIRequestsAndJson.JsonMethods import *
 import requests
 
 # Methods for sending requests to the flask app

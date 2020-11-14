@@ -5,16 +5,19 @@ import json
 app = Flask("Assignment 2")
 parlour = Parlour()
 
+# Default test to see if app works
 @app.route('/pizza')
 def welcome_pizza():
     return 'Welcome to Pizza Planet!'
 
+# Get menu
 @app.route('/menu')
 def menu():
     # Return the entire menu
     menu = parlour.get_menu()
     return parlour.get_menu()
 
+# Get the price of a specific item
 @app.route('/menu/price', methods = ['GET'])
 def get_item_price():
     # TODO
@@ -35,7 +38,7 @@ def get_item_price():
     else:
         return "Not on menu"
 
-
+# Add a new custom type of pizza to the menu
 @app.route('/menu/add_pizza_type', methods = ['POST'])
 def add_pizza_type():
     req_data = request.get_json()
@@ -47,6 +50,7 @@ def add_pizza_type():
     results = parlour.add_pizza_to_menu(toppings, pizza_name)
     return results
 
+# Make a new order
 @app.route('/new_order', methods = ['POST'])
 def new_order():
     req_data = request.get_json()
@@ -62,7 +66,8 @@ def new_order():
     results = parlour.new_order(num_pizzas, num_drinks, size, type, toppings, drinks)
 
     return results
-### NEW
+
+# Cancel an order
 @app.route('/cancel_order', methods = ['POST'])
 def cancel_order():
     req_data = request.get_json()
@@ -73,6 +78,7 @@ def cancel_order():
     results = parlour.cancel_order(order_num)
     return results
 
+# Show a specific order
 @app.route('/show_order', methods = ['POST'])
 def show_order():
     req_data = request.get_json()
@@ -83,6 +89,7 @@ def show_order():
     results = parlour.get_order(order_num)
     return results
 
+# Modify a specific order by adding pizza
 @app.route('/modify_order/add_pizza', methods = ['POST'])
 def add_pizza():
     req_data = request.get_json()
@@ -96,6 +103,7 @@ def add_pizza():
     results = parlour.add_pizza(pizza_size, pizza_type, pizza_toppings, order_to_edit)
     return results
 
+# Modify a specific order by removing a specific pizza
 @app.route('/modify_order/remove_pizza', methods = ['POST'])
 def remove_pizza():
     req_data = request.get_json()
@@ -107,6 +115,7 @@ def remove_pizza():
     results = parlour.delete_pizza(pizza_num, order_to_edit)
     return results
 
+# Modify a specific order by modifying a pizza
 @app.route('/modify_order/modify_pizza', methods = ['POST'])
 def modify_pizza():
     req_data = request.get_json()
@@ -122,6 +131,7 @@ def modify_pizza():
     results = parlour.modify_pizza(new_size, new_type, new_toppings, order_to_edit, num_pizza_to_update, what_to_edit)
     return results
 
+# Modify an order by adding a drink
 @app.route('/modify_order/add_drink', methods = ['POST'])
 def add_drink():
     req_data = request.get_json()
@@ -133,6 +143,7 @@ def add_drink():
     results = parlour.add_drink(new_drink, order_to_edit)
     return results
 
+ # Modify an order by removing a drink
 @app.route('/modify_order/remove_drink', methods = ['POST'])
 def remove_drink():
     req_data = request.get_json()
@@ -144,6 +155,7 @@ def remove_drink():
     results = parlour.delete_drink(drink_num, order_num)
     return results
 
+# Modify an order by modifying a drink
 @app.route('/modify_order/modify_drink', methods = ['POST'])
 def modify_drink():
     req_data = request.get_json()
@@ -156,6 +168,7 @@ def modify_drink():
     results = parlour.modify_drink(new_drink, num_drink_to_update, order_to_edit)
     return results
 
+# Changing the price of something on the menu
 @app.route('/change_price', methods = ['POST'])
 def change_price():
     req_data = request.get_json()
@@ -167,6 +180,7 @@ def change_price():
     results = parlour.change_item_price(item, new_price)
     return results
 
+# Deliver somthing by uber
 @app.route('/deliver/uber', methods = ['POST'])
 def deliver():
     req_data = request.get_json()
@@ -177,6 +191,7 @@ def deliver():
     details = parlour.get_order(order)
     return "Your delivery is on the way!"
 
+# Deliver something by foodora
 @app.route('/deliver/foodora', methods = ['POST'])
 def delivery():
     req_data = request.get_json()

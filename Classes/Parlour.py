@@ -6,13 +6,14 @@ from Classes.OrderBuilder import OrderBuilder
 from Classes.MenuManager import MenuManager
 from Classes.OrderManager import OrderManager
 import json
-# TODO: Maybe put ordr builder in same file as order
 
 class Parlour:
     def __init__(self):
         self.menu_manager = MenuManager()
         self.order_manager = OrderManager()
 
+    ##### Methods that deal with orders such as creation/modifying an order #####
+    ##### *** More detail in each manager
     def check_valid_pizza(self, pizza_size, pizza_type, pizza_toppings):
         menu = self.menu_manager.menu_get()
         return self.order_manager.check_valid_pizza(pizza_size, pizza_type, pizza_toppings, menu)
@@ -50,11 +51,11 @@ class Parlour:
     def cancel_order(self, order_num):
         return self.order_manager.cancel_order(order_num)
 
-    # Returns a specific order as a json string
     def get_order(self, order_num):
         menu = self.menu_manager.menu_get()
         return self.order_manager.get_order(order_num, menu)
 
+    ##### Methods that deal with menus such as getting the menu or modifying it #####
     def get_menu(self):
         return self.menu_manager.get_menu()
 
