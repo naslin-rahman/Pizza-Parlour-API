@@ -77,3 +77,22 @@ def remove_drink_json(order_to_edit, drink_num):
     dict['order_num'] = order_to_edit
     dict['drink_num'] = drink_num
     return json.dumps(dict)
+
+def change_price_json(item, new_price):
+    dict = {}
+    dict['item'] = item
+    dict['new_price'] = new_price
+    return json.dumps(dict)
+
+def delivery_UE_json(order_num, address):
+    dict = {}
+    dict["orderNum"] = int(order_num)
+    dict["address"] = address
+
+    return json.dumps(dict)
+
+def delivery_F_json(order_num, address):
+    new_str = order_num + ',' + address
+    dict = {}
+    dict["csv details"] = new_str
+    return json.dumps(dict)

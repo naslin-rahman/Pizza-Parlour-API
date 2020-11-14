@@ -156,6 +156,17 @@ def modify_drink():
     results = parlour.modify_drink(new_drink, num_drink_to_update, order_to_edit)
     return results
 
+@app.route('/change_price', methods = ['POST'])
+def change_price():
+    req_data = request.get_json()
+    order_details = json.loads(req_data)
+
+    item = order_details['item']
+    new_price = order_details['new_price']
+
+    results = parlour.change_item_price(item, new_price)
+    return results
+
 @app.route('/deliver/uber', methods = ['POST'])
 def deliver():
     req_data = request.get_json()

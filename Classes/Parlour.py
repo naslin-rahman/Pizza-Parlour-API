@@ -63,3 +63,6 @@ class Parlour:
 
     def menu_get(self):
         return self.menu_manager.menu_get()
+
+    def change_item_price(self, item, new_price):
+        return self.menu_manager.change_item_price(item, new_price)

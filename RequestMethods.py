@@ -41,3 +41,15 @@ def add_one_drink_post(order_to_edit, new_drink):
 def remove_drink_post(order_to_edit, drink_num):
     json_string = remove_drink_json(order_to_edit, drink_num)
     return requests.post('http://127.0.0.1:5000/modify_order/remove_drink', json=json_string)
+
+def change_price_post(item, new_price):
+    json_string = change_price_json(item, new_price)
+    return requests.post('http://127.0.0.1:5000/change_price', json=json_string)
+
+def delivery_UE_request(order_num, address):
+    json_string = delivery_UE_json(order_num, address)
+    return requests.post('http://127.0.0.1:5000/deliver/uber', json=json_string)
+
+def delivery_F_request(order_num, address):
+    json_string = delivery_F_json(order_num, address)
+    return requests.post('http://127.0.0.1:5000/deliver/foodora', json=json_string)

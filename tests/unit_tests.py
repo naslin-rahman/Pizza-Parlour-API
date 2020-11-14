@@ -188,6 +188,24 @@ def test_remove_drink_json():
     assert(check2.status_code == 200)
     assert(check2.data == b"Drink doesn't exist")
 
+def test_change_price_json_valid():
+    item = 'Pepperoni'
+    new_price = '100'
+    json_string = change_price_json(item, new_price)
+    check = app.test_client().post('/change_price', json=json_string)
+
+    assert(check.status_code == 200)
+    assert(check.data == b"Price successfully changed")
+
+def test_change_price_json_invalid():
+    item = 'Chocolate :D'
+    new_price = '100'
+    json_string = change_price_json(item, new_price)
+    check = app.test_client().post('/change_price', json=json_string)
+
+    assert(check.status_code == 200)
+    assert(check.data == b"Not a valid item")
+
 def test_delivery_json_uber():
     order_num = '2'
     address = '123 Meh Street'

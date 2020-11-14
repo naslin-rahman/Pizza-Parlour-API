@@ -216,18 +216,17 @@ def update_order():
         if (done == "1"):
             break
 
-def delivery_UE_json(order_num, address):
-    dict = {}
-    dict["orderNum"] = int(order_num)
-    dict["address"] = address
+def change_price():
+    item = input("Please enter item name who's price you want to change\n")
+    r = show_menu_item_get(item)
+    new_price = input("The current price is $" + r.text + ". What is the new price?\n")
+    check = valid_num_input(new_price)
 
-    return json.dumps(dict)
-
-def delivery_F_json(order_num, address):
-    new_str = order_num + ',' + address
-    dict = {}
-    dict["csv details"] = new_str
-    return json.dumps(dict)
+    if (check is not True):
+        print(check)
+    else:
+        result = change_price_post(item, new_price)
+        print(result.text)
 
 def delivery(delivery_type):
     if (delivery_type == "Pickup"):
@@ -237,15 +236,11 @@ def delivery(delivery_type):
         order_num = input("Enter your order #: \n")
         address = input("Enter your address:\n")
         if (delivery_type == "Uber Eats"):
-            json_string = delivery_UE_json(order_num, address)
-
-            result = requests.post('http://127.0.0.1:5000/deliver/uber', json=json_string)
+            result = delivery_UE_request(order_num, address)
             print(result.text)
 
         elif (delivery_type == "Foodora"):
-            json_string = delivery_F_json(order_num, address)
-
-            result = requests.post('http://127.0.0.1:5000/deliver/foodora', json=json_string)
+            result = delivery_F_request(order_num, address)
             print(result.text)
 
 def cli():
@@ -274,6 +269,9 @@ def cli():
 
         if (action == "update"):
             update_order()
+
+        if (action == "change price"):
+            change_price()
 
     # Ask user what delivery method they want
     delivery_type = input("Enter your method of delivery:\n")
