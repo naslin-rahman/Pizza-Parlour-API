@@ -22,10 +22,8 @@ def test_menu():
     assert response.status_code == 200
 
 def test_menu_item():
-    dict = {}
-    dict["name"] = "Pepperoni"
-
-    json_string = json.dumps(dict)
+    item = "Pepperoni"
+    json_string = show_menu_item_json(item)
     response = app.test_client().get('/menu/price', json=json_string)
     assert response.status_code == 200
     assert response.data == b'12'
