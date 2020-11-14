@@ -15,13 +15,14 @@ def valid_num_input(input):
             return "Please enter an integer"
     return "Please enter a non-empty integer"
 
-def add_custom_post(toppings, pizza_name):
+def add_custom_json(toppings, pizza_name):
     dict = {}
     dict["toppings"] = toppings
     dict["pizzaName"] = pizza_name
+    return json.dumps(dict)
 
-    json_string = json.dumps(dict)
-
+def add_custom_post(toppings, pizza_name):
+    json_string = add_custom_json(toppings, pizza_name)
     return requests.post('http://127.0.0.1:5000/menu/add_pizza_type', json=json_string)
 
 def add_custom():
@@ -32,11 +33,14 @@ def add_custom():
 
     print(result.text)
 
-def show_order_post(order_num):
+def show_order_json(order_num):
     dict = {}
     dict["order_num"] = order_num
-
     json_string = json.dumps(dict)
+    return json_string
+
+def show_order_post(order_num):
+    json_string = show_order_json(order_num)
 
     return requests.post('http://127.0.0.1:5000/show_order', json=json_string)
 
@@ -51,11 +55,14 @@ def show_order():
 
         print(r.text)
 
-def cancel_order_post(order_num):
+def cancel_order_json(order_num):
     dict = {}
     dict["order_num"] = order_num
 
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
+
+def cancel_order_post(order_num):
+    json_string = cancel_order_json(order_num)
 
     return requests.post('http://127.0.0.1:5000/cancel_order', json=json_string)
 
@@ -67,14 +74,16 @@ def cancel_order():
         print(check)
     else:
         r = cancel_order_post(order_num)
-
         print(r.text)
 
-def show_menu_item_get(item):
+def show_menu_item_json(item):
     dict = {}
     dict["name"] = item
 
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
+
+def show_menu_item_get(item):
+    json_string = show_menu_item_get(item)
 
     return requests.get('http://127.0.0.1:5000/menu/price', json=json_string)
 
@@ -92,7 +101,7 @@ def show_menu():
     else:
         print ("Not a valid option")
 
-def order_pizzas_drinks_post(numPizzas, numDrinks, size, type, toppings, drinks):
+def order_pizzas_drinks_json(numPizzas, numDrinks, size, type, toppings, drinks):
     dict = {}
     dict['numPizzas'] = numPizzas
     dict['numDrinks'] = numDrinks
@@ -100,8 +109,10 @@ def order_pizzas_drinks_post(numPizzas, numDrinks, size, type, toppings, drinks)
     dict['type'] = type
     dict['toppings'] = toppings
     dict['drinks'] = drinks
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
 
+def order_pizzas_drinks_post(numPizzas, numDrinks, size, type, toppings, drinks):
+    json_string = order_pizzas_drinks_json(numPizzas, numDrinks, size, type, toppings, drinks)
     return requests.post('http://127.0.0.1:5000/new_order', json=json_string)
 
 def order_pizzas_drinks():
@@ -153,7 +164,7 @@ def order_pizzas_drinks():
 
                 print(result.text)
 
-def modify_pizza_post(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings):
+def modify_pizza_json(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings):
     dict = {}
     dict['what_to_edit'] = what_to_edit
     dict['order_num'] = order_to_edit
@@ -161,26 +172,32 @@ def modify_pizza_post(what_to_edit, order_to_edit, num_pizza_to_update, new_size
     dict['new_size'] = new_size
     dict['new_type'] = new_type
     dict['new_toppings'] = new_toppings
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
 
+def modify_pizza_post(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings):
+    json_string = modify_pizza_json(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings)
     return requests.post('http://127.0.0.1:5000/modify_order/modify_pizza', json=json_string)
 
-def add_one_pizza_post(order_to_edit, size, type, toppings):
+def add_one_pizza_json(order_to_edit, size, type, toppings):
     dict = {}
     dict['order_num'] = order_to_edit
     dict['new_size'] = size
     dict['new_type'] = type
     dict['new_toppings'] = toppings
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
 
+def add_one_pizza_post(order_to_edit, size, type, toppings):
+    json_string = add_one_pizza_json(order_to_edit, size, type, toppings)
     return requests.post('http://127.0.0.1:5000/modify_order/add_pizza', json=json_string)
 
-def delete_pizza_post(order_to_edit, pizza_num):
+def delete_pizza_json(order_to_edit, pizza_num):
     dict = {}
     dict['order_num'] = order_to_edit
     dict['pizza_num'] = pizza_num
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
 
+def delete_pizza_post(order_to_edit, pizza_num):
+    json_string = delete_pizza_json(order_to_edit, pizza_num)
     return requests.post('http://127.0.0.1:5000/modify_order/remove_pizza', json=json_string)
 
 def update_pizzas(order_to_edit, types_of_edit):
@@ -236,28 +253,35 @@ def update_pizzas(order_to_edit, types_of_edit):
 
             print(result.text)
 
-def modify_drink_post(order_to_edit, num_drink_to_update, new_drink):
+def modify_drink_json(order_to_edit, num_drink_to_update, new_drink):
     dict = {}
     dict['order_num'] = order_to_edit
     dict['drink_num'] = num_drink_to_update
     dict['new_drink'] = new_drink
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
 
+def modify_drink_post(order_to_edit, num_drink_to_update, new_drink):
+    json_string = modify_drink_json(order_to_edit, num_drink_to_update, new_drink)
     return requests.post('http://127.0.0.1:5000/modify_order/modify_drink', json=json_string)
 
-def add_one_drink_post(order_to_edit, new_drink):
+def add_one_drink_json(order_to_edit, new_drink):
     dict = {}
     dict['order_num'] = order_to_edit
     dict['new_drink'] = new_drink
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
 
+def add_one_drink_post(order_to_edit, new_drink):
+    json_string = add_one_drink_json(order_to_edit, new_drink)
     return requests.post('http://127.0.0.1:5000/modify_order/add_drink', json=json_string)
 
-def remove_drink_post(order_to_edit, drink_num):
+def remove_drink_json(order_to_edit, drink_num):
     dict = {}
     dict['order_num'] = order_to_edit
     dict['drink_num'] = drink_num
-    json_string = json.dumps(dict)
+    return json.dumps(dict)
+
+def remove_drink_post(order_to_edit, drink_num):
+    json_string = remove_drink_post(order_to_edit, drink_num)
 
     return requests.post('http://127.0.0.1:5000/modify_order/remove_drink', json=json_string)
 
@@ -314,6 +338,19 @@ def update_order():
         if (done == "1"):
             break
 
+def delivery_UE_json(order_num, address):
+    dict = {}
+    dict["orderNum"] = int(order_num)
+    dict["address"] = address
+
+    return json.dumps(dict)
+
+def delivery_F_json(order_num, address):
+    new_str = order_num + ',' + address
+    dict = {}
+    dict["csv details"] = new_str
+    return json.dumps(dict)
+
 def delivery(delivery_type):
     if (delivery_type == "Pickup"):
         print("Your order is on its way!")
@@ -322,20 +359,13 @@ def delivery(delivery_type):
         order_num = input("Enter your order #: \n")
         address = input("Enter your address:\n")
         if (delivery_type == "Uber Eats"):
-            dict = {}
-            dict["orderNum"] = int(order_num)
-            dict["address"] = address
-
-            json_string = json.dumps(dict)
+            json_string = delivery_UE_json(order_num, address)
 
             result = requests.post('http://127.0.0.1:5000/deliver/uber', json=json_string)
             print(result.text)
 
         elif (delivery_type == "Foodora"):
-            new_str = order_num + ',' + address
-            dict = {}
-            dict["csv details"] = new_str
-            json_string = json.dumps(dict)
+            json_string = delivery_F_json(order_num, address)
 
             result = requests.post('http://127.0.0.1:5000/deliver/foodora', json=json_string)
             print(result.text)

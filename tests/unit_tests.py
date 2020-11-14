@@ -12,7 +12,7 @@ def test_pizza():
     assert response.status_code == 200
     assert response.data == b'Welcome to Pizza Planet!'
 
-# Main CLI tests
+##### Main CLI tests #####
 def test_valid_num():
     check = valid_num_input('10')
     check2 = valid_num_input('Bleh')
@@ -23,57 +23,66 @@ def test_valid_num():
     assert(check3 == "Please enter a non-empty integer")
     assert(check4 == "Negative numbers are not allowed")
 
-def test_custom_pizza_post():
+def test_custom_pizza_json():
     toppings = "Mushroom"
     pizza_name = "Mushroom pizza"
-    check = add_custom_post(toppings, pizza_name)
+    json_string = add_custom_json(toppings, pizza_name)
+    check = app.test_client().post('/menu/add_pizza_type', json=json_string)
     assert(check.status_code == 200)
-    assert(check.text == "Pizza successfully added to menu")
+    assert(check.data == b"Pizza successfully added to menu")
 
-def test_order_pizzas_drinks_post():
+def test_order_pizzas_drinks_json():
     num_pizzas = '1'
     num_drinks = '1'
     size = ['Medium']
     type = ['Pepperoni']
     toppings = ['Beef']
     drinks = ['Coke']
-    check = order_pizzas_drinks_post(num_pizzas, num_drinks, size, type, toppings, drinks)
+    json_string = order_pizzas_drinks_json(num_pizzas, num_drinks, size, type, toppings, drinks)
+    check = app.test_client().post('/new_order', json=json_string)
     assert(check.status_code == 200)
-    # Only works if the first order
-    # assert(check.text == "Order #1 successfully added. Your order cost is: $17.125")
+    # Only works if the first order - Too specific
+    # assert(check.data == b"Order #1 successfully added. Your order cost is: $17.125")
 
-def test_show_order_post():
-    check = show_order_post('1')
+def test_show_order_json():
+    json_string = show_order_json('1')
+    check = app.test_client().post('/show_order', json=json_string)
     assert(check.status_code == 200)
 
-def test_cancel_order_post():
+def test_cancel_order_json():
     order_num = '1'
-    check = cancel_order_post(order_num)
+    json_string = cancel_order_json(order_num)
+    check = app.test_client().post('/cancel_order', json=json_string)
     assert(check.status_code == 200)
-    assert(check.text == "Order successfully removed")
+    assert(check.data == b"Order successfully removed")
 
     order_num2 = '10'
-    check2 = cancel_order_post(order_num2)
+    json_string2 = cancel_order_json(order_num2)
+    check2 = app.test_client().post('/cancel_order', json=json_string2)
     assert(check2.status_code == 200)
-    assert(check2.text == "Order you're trying to remove does not exist")
+    assert(check2.data == b"Order you're trying to remove does not exist")
 
-def test_show_menu_item_get():
+def test_show_menu_item_json():
     item = "Basil"
-    check = show_menu_item_get(item)
+    json_string = show_menu_item_json(item)
+    check = app.test_client().get('/menu/price', json=json_string)
     assert(check.status_code == 200)
-    assert(check.text == "0.15")
+    assert(check.data == b"0.15")
 
-def test_add_one_pizza_post():
-    test_order_pizzas_drinks_post()
+def test_add_one_pizza_json():
+    test_order_pizzas_drinks_json()
     order_to_edit = '2'
     size = 'Small'
     type = 'Pepperoni'
     toppings = 'Mushroom,Tomatoes'
-    check = add_one_pizza_post(order_to_edit, size, type, toppings)
-    assert(check.status_code == 200)
-    assert(check.text == "New pizza successfully added")
+    json_string = add_one_pizza_json(order_to_edit, size, type, toppings)
+    check = app.test_client().post('/modify_order/add_pizza', json=json_string)
 
-def test_modify_pizza_post():
+    assert(check.status_code == 200)
+    assert(check.data == b"New pizza successfully added")
+
+def test_modify_pizza_json_type1():
+    # Size edit
     what_to_edit = '1'
     order_to_edit = '2'
     num_pizza_to_update = '2'
@@ -81,47 +90,104 @@ def test_modify_pizza_post():
     new_type = ''
     new_toppings = ''
 
-    check = modify_pizza_post(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings)
+    json_string = modify_pizza_json(what_to_edit, order_to_edit, num_pizza_to_update, new_size, new_type, new_toppings)
+    check = app.test_client().post('/modify_order/modify_pizza', json=json_string)
 
     assert(check.status_code == 200)
-    assert(check.text == "Changes succcefully made")
+    assert(check.data == b"Changes succcefully made")
 
-def test_delete_pizza_post():
+def test_modify_pizza_json_type2():
+    # Type Edit
+    what_to_edit2 = '2'
+    order_to_edit2 = '2'
+    num_pizza_to_update2 = '2'
+    new_size2 = ''
+    new_type2 = 'Vegetarian'
+    new_toppings2 = ''
+
+    json_string2 = modify_pizza_json(what_to_edit2, order_to_edit2, num_pizza_to_update2, new_size2, new_type2, new_toppings2)
+    check2 = app.test_client().post('/modify_order/modify_pizza', json=json_string2)
+
+    assert(check2.status_code == 200)
+    assert(check2.data == b"Changes succcefully made")
+
+def test_modify_pizza_json_type3():
+    # Toppings Edit
+    what_to_edit3 = '3'
+    order_to_edit3 = '2'
+    num_pizza_to_update3 = '2'
+    new_size3 = ''
+    new_type3 = ''
+    new_toppings3 = 'Tomatoes,Mushroom,Basil,Pepperoni'
+
+    json_string3 = modify_pizza_json(what_to_edit3, order_to_edit3, num_pizza_to_update3, new_size3, new_type3, new_toppings3)
+    check3 = app.test_client().post('/modify_order/modify_pizza', json=json_string3)
+
+    assert(check3.status_code == 200)
+    assert(check3.data == b"Changes succcefully made")
+
+def test_delete_pizza_json():
     order_to_edit = '2'
     pizza_num = '2'
-    check = delete_pizza_post(order_to_edit, pizza_num)
-    assert(check.status_code == 200)
-    assert(check.text == "Pizza successfully removed")
+    json_string = delete_pizza_json(order_to_edit, pizza_num)
+    check = app.test_client().post('/modify_order/remove_pizza', json=json_string)
 
-def test_add_one_drink_post():
+    assert(check.status_code == 200)
+    assert(check.data == b"Pizza successfully removed")
+
+def test_add_one_drink_json():
     order_to_edit = '2'
     new_drink = 'Coke'
-    check = add_one_drink_post(order_to_edit, new_drink)
-    assert(check.status_code == 200)
-    assert(check.text == "New drink successfully added")
+    json_string = add_one_drink_json(order_to_edit, new_drink)
+    check = app.test_client().post('/modify_order/add_drink', json=json_string)
 
-def test_modify_drink_post():
+    assert(check.status_code == 200)
+    assert(check.data == b"New drink successfully added")
+
+def test_modify_drink_json():
     order_to_edit = '2'
     num_drink_to_update = '2'
     new_drink = 'Pepsi'
-    check = modify_drink_post(order_to_edit, num_drink_to_update, new_drink)
-    assert(check.status_code == 200)
-    assert(check.text == "Changes succcefully made")
+    json_string = modify_drink_json(order_to_edit, num_drink_to_update, new_drink)
+    check = app.test_client().post('/modify_order/modify_drink', json=json_string)
 
-def test_remove_drink_post():
+    assert(check.status_code == 200)
+    assert(check.data == b"Changes succcefully made")
+
+def test_remove_drink_json():
     order_to_edit = '2'
     drink_num = '1'
-    check = remove_drink_post(order_to_edit, drink_num)
+    json_string = remove_drink_json(order_to_edit, drink_num)
+    check = app.test_client().post('/modify_order/remove_drink', json=json_string)
+
     assert(check.status_code == 200)
-    assert(check.text == "Drink successfully removed")
+    assert(check.data == b"Drink successfully removed")
 
     order_to_edit2 = '2'
     drink_num2 = '10'
-    check2 = remove_drink_post(order_to_edit2, drink_num2)
-    assert(check2.status_code == 200)
-    assert(check2.text == "Drink doesn't exist")
+    json_string2 = remove_drink_json(order_to_edit2, drink_num2)
+    check2 = app.test_client().post('/modify_order/remove_drink', json=json_string2)
 
-# Class Menu and drink  and pizza tests #
+    assert(check2.status_code == 200)
+    assert(check2.data == b"Drink doesn't exist")
+
+def test_delivery_json_uber():
+    order_num = '2'
+    address = '123 Meh Street'
+    json_string = delivery_UE_json(order_num, address)
+    check = app.test_client().post('/deliver/uber', json=json_string)
+    assert(check.status_code == 200)
+    assert(check.data == b"Your delivery is on the way!")
+
+def test_delivery_json_foodora():
+    order_num = '2'
+    address = '123 Meh Street'
+    json_string = delivery_F_json(order_num, address)
+    check = app.test_client().post('/deliver/foodora', json=json_string)
+    assert(check.status_code == 200)
+    assert(check.data == b"Your delivery is on the way!")
+
+##### Class Menu and drink  and pizza tests #####
 def test_get_pizza_price():
     menu = Menu()
     i = menu.get_pizza_price("Pepperoni")
