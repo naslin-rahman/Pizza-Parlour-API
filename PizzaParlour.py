@@ -52,14 +52,14 @@ def new_order():
     req_data = request.get_json()
     order_details = json.loads(req_data)
 
-    numPizzas = order_details['numPizzas']
-    numDrinks = order_details['numDrinks']
+    num_pizzas = order_details['num_pizzas']
+    num_drinks = order_details['num_drinks']
     size = order_details['size']
     type = order_details['type']
     toppings = order_details['toppings']
     drinks = order_details['drinks']
 
-    results = parlour.new_order(numPizzas, numDrinks, size, type, toppings, drinks)
+    results = parlour.new_order(num_pizzas, num_drinks, size, type, toppings, drinks)
 
     return results
 ### NEW

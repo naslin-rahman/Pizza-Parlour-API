@@ -25,10 +25,10 @@ def show_menu_item_json(item):
 
     return json.dumps(dict)
 
-def order_pizzas_drinks_json(numPizzas, numDrinks, size, type, toppings, drinks):
+def order_pizzas_drinks_json(num_pizzas, num_drinks, size, type, toppings, drinks):
     dict = {}
-    dict['numPizzas'] = numPizzas
-    dict['numDrinks'] = numDrinks
+    dict['num_pizzas'] = num_pizzas
+    dict['num_drinks'] = num_drinks
     dict['size'] = size
     dict['type'] = type
     dict['toppings'] = toppings
