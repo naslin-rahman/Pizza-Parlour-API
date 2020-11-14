@@ -4,6 +4,8 @@ from Classes.Drinks import Drinks
 from Classes.Order import Order
 from Classes.Pizza import Pizza
 from Classes.Parlour import Parlour
+from Classes.OrderBuilder import OrderBuilder
+from Classes.OrderManager import OrderManager
 from main import *
 
 def test_pizza():
@@ -11,6 +13,21 @@ def test_pizza():
 
     assert response.status_code == 200
     assert response.data == b'Welcome to Pizza Planet!'
+
+def test_menu():
+    p = Parlour()
+    response = app.test_client().get('/menu')
+    
+    assert response.status_code == 200
+
+def test_menu_item():
+    dict = {}
+    dict["name"] = "Pepperoni"
+
+    json_string = json.dumps(dict)
+    response = app.test_client().get('/menu/price', json=json_string)    
+    assert response.status_code == 200
+    assert response.data == b'12'
 
 # Main CLI tests
 def test_valid_num():
@@ -163,6 +180,7 @@ def test_create_pizza():
 # Order tests #
 def test_order_add_remove():
     order = Order(1)
+    menu = Menu()
     assert(order.cost == 0)
     assert(order.pizza_num == 0)
 
@@ -177,6 +195,47 @@ def test_order_add_remove():
 
     order.change_type("Large",1)
     assert(order.pizzas["1"].type == "Large")
+
+def test_order_manager():
+    o = OrderManager()
+    menu = Menu()
+    assert(o.order_nums == 0)
+    assert(o.orders == {})
+    assert(o.check_valid_pizza("Small","Pepperoni","",menu) == True)
+
+def test_valid_drink():
+    oB = OrderBuilder()
+    menu = Menu()
+    i = oB.check_valid_drink("Coke", menu)
+    assert(i == True)
+
+def test_valid_pizza_object():
+    oB = OrderBuilder()
+    menu = Menu()
+    i = oB.check_valid_pizza("Small","Pepperoni","",menu)
+    assert(i == True)
+
+def test_make_drink():
+    oB = OrderBuilder()
+    menu = Menu()
+    assert(oB.make_drink("Water").type == "Water")
+
+def test_make_pizza():
+    oB = OrderBuilder()
+    assert(oB.make_pizza("Small","Pepperoni","").type == "Pepperoni")
+    assert(oB.make_pizza("Small","Pepperoni","").size == "Small")
+    assert(oB.make_pizza("Small","Pepperoni","").toppings == "")
+
+def test_make_order():
+    oB = OrderBuilder()
+    assert(oB.make_order(1).order_num == 1)
+
+def test_build_order():
+    oB = OrderBuilder()
+    menu = Menu()
+    order = oB.build_order(menu,"1","2",["Small"], ["Pepperoni"],[""],["Coke","Water"], 1)
+    assert(order.order_num == 1)
+
 
 #Parlour tests#
 def test_parlour():
