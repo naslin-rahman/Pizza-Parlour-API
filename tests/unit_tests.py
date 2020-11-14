@@ -40,6 +40,14 @@ def test_valid_num():
     assert(check3 == "Please enter a non-empty integer")
     assert(check4 == "Negative numbers are not allowed")
 
+def test_uber():
+    i = delivery_UE_json("1", "123 lester")
+    assert(i == '{"orderNum": 1, "address": "123 lester"}')
+
+def test_delivery_pickup():
+    i = delivery("Pickup")
+    assert(i == None)
+    
 def test_custom_pizza_json():
     toppings = "Mushroom"
     pizza_name = "Mushroom pizza"
